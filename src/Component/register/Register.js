@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import InputForm from '../InputForm/InputForm';
+import Button from '../Button/Button';
 
 const DEFAULT_FORM = {
     username: '',
@@ -57,8 +58,7 @@ const Register = () => {
     }
         
     return (
-        <div>
-            <button onClick={() => register('ShaulBd', 'Shaulbd1235@', 'shaulbd9@gmail.com', 'shaul', 'ben david')}>Register</button>
+        <Fragment>
             <form onSubmit={handleSubmit}>
                 <InputForm type="text" name="username" required onChange={handleChange} value={username} label="User Name"/>
                 <InputForm type="password" name="password" required onChange={handleChange} value={password} label="Password"/>
@@ -66,9 +66,9 @@ const Register = () => {
                 <InputForm type="email" name="email" required  onChange={handleChange} value={email} label="Email"/>
                 <InputForm type="text" name="firstName" required  onChange={handleChange} value={firstName} label="First Name"/>
                 <InputForm type="text" name="lastName" required onChange={handleChange} value={lastName} label="Last Name"/>
-                <button type='submit'>Register</button>
+                <Button type='submit'>Register</Button>
             </form>
-        </div>
+        </Fragment>
     );
 }
 

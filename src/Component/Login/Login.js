@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Fragment } from 'react';
 import InputForm from '../InputForm/InputForm';
+import Button from '../Button/Button';
 
 const DEFAULT_FORM = {
     username: '',
@@ -40,7 +42,11 @@ const Login = ({ addAccessToken }) => {
 
         const accessKey = await logIn(username, password);
         console.log(accessKey);
-        addAccessToken(accessKey);
+        if (accessKey[0] !== undefined) {
+            addAccessToken(accessKey);     
+        } else {
+            alert('Incorrect Password or User');           
+        }
     }
 
 
@@ -52,13 +58,13 @@ const Login = ({ addAccessToken }) => {
 
         
     return (
-        <div>
+        <Fragment>
             <form onSubmit={handleLogin}>
                 <InputForm type="text" name="username" required onChange={handleChange} value={username} label="User Name"/>
                 <InputForm type="password" name="password" required onChange={handleChange} value={password} label="Password" />
-                <button type='submit'>Login</button>
+                <Button type='submit'>Login</Button>
             </form>
-        </div>
+        </Fragment>
     );
 }
 

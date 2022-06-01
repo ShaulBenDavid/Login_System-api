@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import InputForm from '../InputForm/InputForm';
+import Button from '../Button/Button';
 
 const CreatePost = ({ accessToken, addPost }) => {
     const [post, setPost] = useState('');
@@ -36,7 +37,7 @@ const CreatePost = ({ accessToken, addPost }) => {
         <div>
             <form onSubmit={handleSubmit}>
                 <InputForm type="text" name="post" required onChange={handleChange} value={post} label="Write Something" />
-                <button type='submit'>Post</button>
+                <Button type='submit'>Post</Button>
             </form>
         </div>
   )

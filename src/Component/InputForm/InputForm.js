@@ -1,10 +1,12 @@
+import * as S from './inputForm.style';
 
-const InputForm = ({ label, ...otherProps}) => {
+const InputForm = ({ label, ...otherProps }) => {
+
     return (
-        <div>
-            <label>{label}</label>
-            <input {...otherProps}/>
-        </div>  
+        <S.InputContainer>
+            <S.InputBox className="input-box" {...otherProps} />
+            <S.LabelInput shrink={otherProps.value.length ? true : false}>{label}</S.LabelInput>
+        </S.InputContainer>  
     );
 }
 
