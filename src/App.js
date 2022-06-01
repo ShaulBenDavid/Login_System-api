@@ -8,16 +8,21 @@ import CreatePost from './Component/CreatePost/CreatePost';
 function App() {
   const [accessToken, setAccessToken] = useState(undefined);
   const [MyItems, setMyItems] = useState([]);
+  const [ShowName, setShowName] = useState('');
 
   useEffect(() => {
     setAccessToken(localStorage.getItem("AccessToken"));
   }, [])
 
+  //Deploy access token
   const addAccessToken = (event) => {
-    setAccessToken(event);
-    localStorage.setItem("AccessToken", event)
+    setAccessToken(event[0]);
+    localStorage.setItem("AccessToken", event[0])
+    setShowName(event[1]);
+    localStorage.setItem("UserName", event[1])
   }
 
+  // Loading user posts
   useEffect(() => {
     const getItems = async () => {
       const response = await fetch("https://abra-course-server.herokuapp.com/items/", {
@@ -37,6 +42,7 @@ function App() {
     getItems();
   }, [accessToken]);
   
+  //Loading the new post in a real time
   const addPost = (event) => {
     setMyItems([...MyItems, event]);
   }
@@ -45,7 +51,10 @@ function App() {
     <div className="App">
       <Register />
       <Login addAccessToken={addAccessToken}/>
-      <CreatePost accessToken={accessToken} addPost={addPost}/>
+      <CreatePost accessToken={accessToken} addPost={addPost} />
+      {ShowName && 
+        <p><strong>Hello</strong> {ShowName}</p>
+      }
       { MyItems
          && <PostsList MyItems={MyItems} />}
     </div>
