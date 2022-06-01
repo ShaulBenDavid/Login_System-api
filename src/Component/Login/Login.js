@@ -26,7 +26,7 @@ const Login = ({ addAccessToken }) => {
             });
     
             const data = await response.json();
-            return data.access;
+            return ([data.access, username]);
 
         } catch (e) {
             console.log(e);
@@ -39,6 +39,7 @@ const Login = ({ addAccessToken }) => {
         event.preventDefault();
 
         const accessKey = await logIn(username, password);
+        console.log(accessKey);
         addAccessToken(accessKey);
     }
 
