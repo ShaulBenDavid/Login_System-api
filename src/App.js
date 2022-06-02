@@ -5,13 +5,11 @@ import Login from './Component/Login/Login';
 import Register from './Component/register/Register';
 import PostsList from './Component/PostsList/PostsList';
 import { useState, useEffect, Fragment } from 'react';
-import CreatePost from './Component/CreatePost/CreatePost';
 import * as S from './App.style';
 import abraLogo from './Assets/logo.png';
 
 function App() {
   const [accessToken, setAccessToken] = useState(undefined);
-  const [MyItems, setMyItems] = useState([]);
   const [ShowName, setShowName] = useState('');
   const [signType, setSignType] = useState(true);
   const [userIsActive, setUserIsActive] = useState(false);
@@ -24,35 +22,13 @@ function App() {
   const addAccessToken = (event) => {
     setAccessToken(event[0]);
     localStorage.setItem("AccessToken", event[0])
+    if (event[0]) {
+      setUserIsActive(true);
+    }
     setShowName(event[1]);
     localStorage.setItem("UserName", event[1])
   }
 
-  // Loading user posts
-  useEffect(() => {
-    const getItems = async () => {
-      const response = await fetch("https://abra-course-server.herokuapp.com/items/", {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + accessToken
-        },
-        method: "GET"
-      })
-      
-      if (response.status === 200){
-        const data = await response.json();
-        setMyItems(data);
-        setUserIsActive(true);
-      }
-    }
-
-    getItems();
-  }, [accessToken]);
-  
-  //Loading the new post in a real time
-  const addPost = (event) => {
-    setMyItems([...MyItems, event]);
-  }
 
   // Toggle Form types
   const handleSignType = () => {
@@ -86,10 +62,8 @@ function App() {
           :
         
           <Fragment>
-            <CreatePost accessToken={accessToken} addPost={addPost} />
             <p><strong>Hello</strong> {ShowName}</p>
-            { MyItems
-              && <PostsList MyItems={MyItems} />}
+             <PostsList accessToken={accessToken} />
           </Fragment>        
         }
 

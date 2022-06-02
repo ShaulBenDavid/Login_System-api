@@ -22,6 +22,7 @@ const CreatePost = ({ accessToken, addPost }) => {
 
         const data = await response.json();
         addPost(data);
+        setPost('');
     }
 
     const handleSubmit = (event) => {
