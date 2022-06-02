@@ -1,10 +1,10 @@
-
+import { StyledHeader } from "./Header.style";
 const Header = ({ showName, logoutFromUser }) => {
   return (
-      <header>
+      <StyledHeader>
           <p><strong>Hello</strong> {showName}</p>
           <button onClick={logoutFromUser}>Logout</button>
-      </header>
+      </StyledHeader>
   )
 }
 

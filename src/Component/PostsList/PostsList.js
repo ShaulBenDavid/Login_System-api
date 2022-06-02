@@ -1,6 +1,7 @@
 import Post from "../Post/Post";
 import { useEffect, useState } from "react";
 import CreatePost from '../CreatePost/CreatePost';
+import { PostPage, PostsContainer } from "./PostList.style";
 
 const PostsList = ({ accessToken }) => {
     const [myItems, setMyItems] = useState(() => []);
@@ -24,7 +25,8 @@ const PostsList = ({ accessToken }) => {
 
     getItems();
     }, [accessToken]);
-    
+
+    console.log(myItems)
       //Loading the new post in a real time
     const addPost = (event) => {
         setMyItems([...myItems, event]);
@@ -49,14 +51,16 @@ const PostsList = ({ accessToken }) => {
     };
 
     return (
-        <div>
+        <PostPage>
         <CreatePost accessToken={accessToken} addPost={addPost} />
-        {myItems && myItems.map((item) => {
-            return (
-                <Post key={item.id} item={item} accessToken={accessToken} deleteItemFromList={deleteItemFromList} updateItem={updateItem}/>
-            )
-        })}
-        </div>
+        <PostsContainer>
+            {myItems && myItems.map((item) => {
+                return (
+                    <Post key={item.id} item={item} accessToken={accessToken} deleteItemFromList={deleteItemFromList} updateItem={updateItem}/>
+                )
+            })}
+        </PostsContainer>
+        </PostPage>
     );
 }
 

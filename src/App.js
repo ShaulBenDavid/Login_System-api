@@ -4,7 +4,7 @@ import GlobalStyled from './GlobalDesgin/Global';
 import Login from './Component/Login/Login';
 import Register from './Component/register/Register';
 import PostsList from './Component/PostsList/PostsList';
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import * as S from './App.style';
 import abraLogo from './Assets/logo.png';
 import Header from './Component/Header/Header';
@@ -19,7 +19,7 @@ function App() {
     setAccessToken(localStorage.getItem("AccessToken"));
   }, [])
 
-  //Deploy access token
+  //Deploy access token and login
   const addAccessToken = (event) => {
     setAccessToken(event[0]);
     localStorage.setItem("AccessToken", event[0])
@@ -28,9 +28,9 @@ function App() {
     }
     setShowName(event[1]);
     localStorage.setItem("UserName", event[1])
-  }
+  } 
 
-  // Stay login when loading the broswer
+
 
   // Logout
   const logoutFromUser = () => {
@@ -73,10 +73,10 @@ function App() {
           
           :
         
-          <Fragment>
+          <S.HomePage>
             <Header showName={showName} logoutFromUser={logoutFromUser}/>
             <PostsList accessToken={accessToken}/>
-          </Fragment>        
+          </S.HomePage>        
         }
 
       </S.AppContainer>

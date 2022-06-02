@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import InputForm from '../InputForm/InputForm';
 import Button from '../Button/Button';
+import { CreateInput } from './CreatePost.style';
 
 const CreatePost = ({ accessToken, addPost }) => {
     const [post, setPost] = useState('');
@@ -35,12 +36,12 @@ const CreatePost = ({ accessToken, addPost }) => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <Fragment>
+            <CreateInput onSubmit={handleSubmit}>
                 <InputForm type="text" name="post" required onChange={handleChange} value={post} label="Write Something" />
                 <Button type='submit'>Post</Button>
-            </form>
-        </div>
+            </CreateInput>
+        </Fragment>
   )
 }
 

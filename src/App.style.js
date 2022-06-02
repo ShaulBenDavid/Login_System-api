@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from './GlobalDesgin/theme';
+
 
 export const AppContainer = styled.div`
     text-align: center;
@@ -14,6 +14,12 @@ export const AppContainer = styled.div`
     align-items: center;
 `;
 
+export const HomePage = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
 export const AuthBox = styled.div`
     width: 70%;
     max-width: 900px;

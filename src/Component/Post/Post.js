@@ -1,5 +1,6 @@
 import { useState } from "react";
 import InputForm from "../InputForm/InputForm";
+import { StyledPost, PostButton, ButtonWrapper } from './Post.style';
 
 const Post = ({ item, accessToken, deleteItemFromList, updateItem }) => {
     const { name, id } = item;
@@ -68,16 +69,18 @@ const Post = ({ item, accessToken, deleteItemFromList, updateItem }) => {
     };
 
     return (
-        <div>
+        <StyledPost>
             <p>{name}</p>
-            <button onClick={handleDelete}>DELETE</button>
-            <button onClick={handleRenameInput}>EDIT</button>
+            <ButtonWrapper>
+                <PostButton varient='delete' onClick={handleDelete}>DELETE</PostButton>
+                <PostButton varient='rename' onClick={handleRenameInput}>EDIT</PostButton>
+            </ButtonWrapper>
             { editInputActive &&           
             <form onSubmit={handleRename}>
                 <InputForm type="text" name="name" required onChange={handleChange} value={newText} label="Edit" />
-                <button type='submit'>Change</button>
+                <PostButton varient='change' type='submit'>Change</PostButton>
             </form>}
-        </div>
+        </StyledPost>
     );
 }
 
