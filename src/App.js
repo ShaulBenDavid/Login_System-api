@@ -7,10 +7,11 @@ import PostsList from './Component/PostsList/PostsList';
 import { useState, useEffect, Fragment } from 'react';
 import * as S from './App.style';
 import abraLogo from './Assets/logo.png';
+import Header from './Component/Header/Header';
 
 function App() {
   const [accessToken, setAccessToken] = useState(undefined);
-  const [ShowName, setShowName] = useState('');
+  const [showName, setShowName] = useState(() => '');
   const [signType, setSignType] = useState(true);
   const [userIsActive, setUserIsActive] = useState(false);
 
@@ -29,11 +30,22 @@ function App() {
     localStorage.setItem("UserName", event[1])
   }
 
+  // Stay login when loading the broswer
+
+  // Logout
+  const logoutFromUser = () => {
+    localStorage.removeItem("AccessToken");
+    localStorage.removeItem("UserName");
+    setUserIsActive(false);
+  };
+
 
   // Toggle Form types
   const handleSignType = () => {
     setSignType(!signType);
   };
+
+
   // <Register />
   return (
     <ThemeProvider theme={ theme }>
@@ -46,7 +58,7 @@ function App() {
               {signType ?
                 <Login addAccessToken={addAccessToken} />
                 :
-                <Register />
+                <Register setSignType={setSignType} signType={signType} />
               }
               <p>
                 {signType ? 'Not a member?' : 'Already registered?'}
@@ -62,8 +74,8 @@ function App() {
           :
         
           <Fragment>
-            <p><strong>Hello</strong> {ShowName}</p>
-             <PostsList accessToken={accessToken} />
+            <Header showName={showName} logoutFromUser={logoutFromUser}/>
+            <PostsList accessToken={accessToken}/>
           </Fragment>        
         }
 

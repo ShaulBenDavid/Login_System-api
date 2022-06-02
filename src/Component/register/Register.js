@@ -11,7 +11,7 @@ const DEFAULT_FORM = {
     lastName: ''
 }
 
-const Register = () => {
+const Register = ({ signType, setSignType}) => {
     const [formField, setFormField] = useState(DEFAULT_FORM);
     const { username, password, password2, email, firstName, lastName } = formField;
 
@@ -36,6 +36,13 @@ const Register = () => {
     
             const data = await response.json();
             console.log(data);
+
+            if (response.status === 400) {
+                alert("Your register was failed try diffrent Email or User Name");
+            } else if (response.status === 201) {
+                alert("You just created an account Congratulations!");
+                setSignType(!signType);
+            }
         } catch (e) {
             console.log(e);
         }
