@@ -10,6 +10,10 @@ export const PostPage = styled.div`
         border-radius: 20px;
         height: 80vh;
         box-shadow: 4px 4px 40px 4px rgb(16 26 68 / 50%);
+        
+        @media (max-width: 600px){
+            width: 90%;
+        }
 `;
 
 export const PostsContainer = styled.section`

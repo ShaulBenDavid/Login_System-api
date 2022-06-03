@@ -28,6 +28,10 @@ export const AuthBox = styled.div`
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 4px 4px 40px 4px rgb(16 26 68 / 50%);
+    
+    @media (max-width: 600px){
+            width: 90%;
+    }
 `;
 
 export const FormSide = styled.div`
@@ -45,6 +49,10 @@ export const FormSide = styled.div`
         position: absolute;
         bottom: 16px;
     }
+
+    @media (max-width: 600px) {
+        width: 100%;
+    }
 `;
 
 export const ToggleButton = styled.button`
@@ -56,11 +64,5 @@ export const ToggleButton = styled.button`
     cursor: pointer;
 `;
 
-export const Banner = styled.div`
-    width: 50%;
-    background-color: ${({ theme }) => theme.colors.PrimaryBlue};
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
+
 

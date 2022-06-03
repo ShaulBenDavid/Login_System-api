@@ -24,4 +24,8 @@ export const StyledHeader = styled.header`
         color: ${({ theme }) => theme.colors.PrimaryBlue};
         cursor: pointer; 
     }
+
+    @media (max-width: 600px) {
+        width: 90%;
+    }
 `;

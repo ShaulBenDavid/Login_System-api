@@ -3,7 +3,7 @@ import InputForm from '../InputForm/InputForm';
 import Button from '../Button/Button';
 import { CreateInput } from './CreatePost.style';
 
-const CreatePost = ({ accessToken, addPost }) => {
+const CreatePost = ({ accessToken, addPost, logoutFromUser }) => {
     const [post, setPost] = useState('');
 
 
@@ -20,6 +20,10 @@ const CreatePost = ({ accessToken, addPost }) => {
             method: "POST",
             body: JSON.stringify(payload)
         })
+
+        if (response.status === 401) {
+            logoutFromUser();
+        }
 
         const data = await response.json();
         addPost(data);

@@ -2,7 +2,7 @@ import { useState } from "react";
 import InputForm from "../InputForm/InputForm";
 import { StyledPost, PostButton, ButtonWrapper } from './Post.style';
 
-const Post = ({ item, accessToken, deleteItemFromList, updateItem }) => {
+const Post = ({ item, accessToken, deleteItemFromList, updateItem, logoutFromUser }) => {
     const { name, id } = item;
     
     const [newText, setNewText] = useState(() => '');
@@ -10,39 +10,51 @@ const Post = ({ item, accessToken, deleteItemFromList, updateItem }) => {
 
     // Delete api
     const deleteItem = async (id) => {
-        const response = await fetch(`https://abra-course-server.herokuapp.com/items/${id}/`, {
-            headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + accessToken
-            },
-            method: "DELETE"
-        })
+        try {
+            const response = await fetch(`https://abra-course-server.herokuapp.com/items/${id}/`, {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + accessToken
+                },
+                method: "DELETE"
+            })
 
-        if (response.status === 204) {
-            deleteItemFromList(id);          
+            if (response.status === 204) {
+                deleteItemFromList(id);          
+            }  else if (response.status === 401) {
+                logoutFromUser();
+            }          
+        } catch (e) {
+            console.log(e);
         }
+
 
     }
 
     // Rename api
     const RenameItem = async (id, name) => {
-        const payload = {
-            name
-        };
+        try {
+            const payload = {
+                name
+            };
 
-        const response = await fetch(`https://abra-course-server.herokuapp.com/items/${id}/`, {
-            headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + accessToken
-            },
-            method: "PATCH",
-            body: JSON.stringify(payload)
-        })
+            const response = await fetch(`https://abra-course-server.herokuapp.com/items/${id}/`, {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + accessToken
+                },
+                method: "PATCH",
+                body: JSON.stringify(payload)
+            })
 
-        if (response.status === 200) {
-            updateItem(id, name);          
+            if (response.status === 200) {
+                updateItem(id, name);          
+            } else if (response.status === 401) {
+                logoutFromUser();
+            }
+        } catch (e) {
+            console.log(e);
         }
-
     }
 
     // delete the item

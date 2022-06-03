@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import CreatePost from '../CreatePost/CreatePost';
 import { PostPage, PostsContainer } from "./PostList.style";
 
-const PostsList = ({ accessToken }) => {
+const PostsList = ({ accessToken, logoutFromUser }) => {
     const [myItems, setMyItems] = useState(() => []);
 
       // Loading user posts
@@ -52,11 +52,18 @@ const PostsList = ({ accessToken }) => {
 
     return (
         <PostPage>
-        <CreatePost accessToken={accessToken} addPost={addPost} />
+        <CreatePost accessToken={accessToken} addPost={addPost} logoutFromUser={logoutFromUser}/>
         <PostsContainer>
             {myItems && myItems.map((item) => {
                 return (
-                    <Post key={item.id} item={item} accessToken={accessToken} deleteItemFromList={deleteItemFromList} updateItem={updateItem}/>
+                    <Post
+                        logoutFromUser={logoutFromUser}
+                        key={item.id}
+                        item={item}
+                        accessToken={accessToken}
+                        deleteItemFromList={deleteItemFromList}
+                        updateItem={updateItem}
+                    />
                 )
             })}
         </PostsContainer>

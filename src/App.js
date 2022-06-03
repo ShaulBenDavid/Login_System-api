@@ -6,8 +6,8 @@ import Register from './Component/register/Register';
 import PostsList from './Component/PostsList/PostsList';
 import { useState, useEffect } from 'react';
 import * as S from './App.style';
-import abraLogo from './Assets/logo.png';
 import Header from './Component/Header/Header';
+import Banner from './Component/Banner/Banner';
 
 function App() {
   const [accessToken, setAccessToken] = useState(undefined);
@@ -66,16 +66,14 @@ function App() {
               </p>
             </S.FormSide>
 
-            <S.Banner>
-              <img src={abraLogo} alt="Logo" />
-            </S.Banner>
+            <Banner/>
           </S.AuthBox>
           
           :
         
           <S.HomePage>
             <Header showName={showName} logoutFromUser={logoutFromUser}/>
-            <PostsList accessToken={accessToken}/>
+            <PostsList accessToken={accessToken} logoutFromUser={logoutFromUser}/>
           </S.HomePage>        
         }
 

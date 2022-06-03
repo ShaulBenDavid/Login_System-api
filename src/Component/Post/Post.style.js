@@ -12,15 +12,24 @@ export const StyledPost = styled.article`
     overflow: hidden;
     box-shadow: 2px 2px 4px 2px rgb(16 26 68 / 40%);
 
+    p {
+        color: ${({ theme }) => theme.colors.PrimaryBlue};
+        
+        &::first-letter{
+            text-transform: capitalize;
+        }
+    }
     form {
         margin-top: 20px;
     }
+
 `;
 
 export const ButtonWrapper = styled.div`
     width: 100%;
 `;
 
+// post button
 export const PostButton = styled.button`
     width: 50%;
     border: none;
