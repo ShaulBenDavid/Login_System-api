@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Fragment } from 'react';
 import InputForm from '../InputForm/InputForm';
 import Button from '../Button/Button';
+import { loginUser } from '../../Services/Api';
 
 const DEFAULT_FORM = {
     username: '',
@@ -12,40 +13,24 @@ const Login = ({ addAccessToken }) => {
     const [formField, setFormField] = useState(DEFAULT_FORM);
     const { username, password} = formField;
 
-    const logIn = async (username, password) => {
-        try {
-            const payload = {
-                username,
-                password
-            };
-
-            const response = await fetch("https://abra-course-server.herokuapp.com/api/token/", {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify(payload)
-            });
-    
-            const data = await response.json();
-            return ([data.access, username]);
-
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-
-
     const handleLogin = async (event) => {
         event.preventDefault();
 
-        const accessKey = await logIn(username, password);
-        console.log(accessKey);
-        if (accessKey[0] !== undefined) {
-            addAccessToken(accessKey);     
-        } else {
-            alert('Incorrect Password or User');           
+        try {
+            const accessKey = await loginUser(username, password); 
+            console.log(accessKey);
+
+            if (accessKey.data.access !== undefined) {
+
+                addAccessToken([accessKey.data.access, username]); 
+                
+            } else if (accessKey.response.status === 401) {
+                
+                alert('Incorrect Password or User');
+                
+            }            
+        } catch  (err) {
+            console.log(err);
         }
     }
 

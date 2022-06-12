@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import InputForm from '../InputForm/InputForm';
 import Button from '../Button/Button';
+import { registerUser } from '../../Services/Api';
 
 const DEFAULT_FORM = {
     username: '',
@@ -15,48 +16,29 @@ const Register = ({ signType, setSignType}) => {
     const [formField, setFormField] = useState(DEFAULT_FORM);
     const { username, password, password2, email, firstName, lastName } = formField;
 
-    const register = async (username, password, email, firstName, lastName) => {
-        try {
-            const payload = {
-                username: username,
-                password: password,
-                password2: password,
-                email: email,
-                first_name: firstName,
-                last_name: lastName
-            };
-
-            const response = await fetch("https://abra-course-server.herokuapp.com/register/", {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify(payload)
-            });
-    
-            const data = await response.json();
-            console.log(data);
-
-            if (response.status === 400) {
-                alert("Your register was failed try diffrent Email or User Name");
-            } else if (response.status === 201) {
-                alert("You just created an account Congratulations!");
-                setSignType(!signType);
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-
+        
         if (password !== password2) {
             alert("Passwords do not match");
             return;
         }
 
-        register(username, password, email, firstName, lastName);
+        try {
+            const data = await registerUser(username, password, email, firstName, lastName);
+            console.log(data.response.status);
+
+            if (data.response.status === 400) {
+                alert("Your register was failed try diffrent Email or User Name");
+            } else if (data.response.status === 201) {
+                alert("You just created an account Congratulations!");
+                setSignType(!signType);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+
     }
 
     const handleChange = (event) => {

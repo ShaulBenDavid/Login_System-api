@@ -4,25 +4,22 @@ import GlobalStyled from './GlobalDesgin/Global';
 import Login from './Component/Login/Login';
 import Register from './Component/register/Register';
 import PostsList from './Component/PostsList/PostsList';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import * as S from './App.style';
 import Header from './Component/Header/Header';
 import Banner from './Component/Banner/Banner';
 
 function App() {
-  const [accessToken, setAccessToken] = useState(undefined);
+  const [accessToken, setAccessToken] = useState(() => localStorage.getItem("AccessToken"));
   const [showName, setShowName] = useState(() => '');
   const [signType, setSignType] = useState(true);
   const [userIsActive, setUserIsActive] = useState(false);
 
-  useEffect(() => {
-    setAccessToken(localStorage.getItem("AccessToken"));
-  }, [])
-
   //Deploy access token and login
   const addAccessToken = (event) => {
     setAccessToken(event[0]);
-    localStorage.setItem("AccessToken", event[0])
+    localStorage.setItem("AccessToken", event[0]);
+
     if (event[0]) {
       setUserIsActive(true);
     }
