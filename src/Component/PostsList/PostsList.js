@@ -1,30 +1,8 @@
 import Post from "../Post/Post";
-import { useEffect, useState } from "react";
 import CreatePost from '../CreatePost/CreatePost';
 import { PostPage, PostsContainer } from "./PostList.style";
 
-const PostsList = ({ accessToken, logoutFromUser }) => {
-    const [myItems, setMyItems] = useState(() => []);
-
-      // Loading user posts
-    useEffect(() => {
-        const getItems = async () => {
-            const response = await fetch("https://abra-course-server.herokuapp.com/items/", {
-                headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + accessToken
-                },
-                method: "GET"
-            })
-            
-            if (response.status === 200){
-                const data = await response.json();
-                setMyItems(data);
-            }
-        }
-
-    getItems();
-    }, [accessToken]);
+const PostsList = ({ accessToken, logoutFromUser, myItems, setMyItems }) => {
 
     console.log(myItems)
       //Loading the new post in a real time

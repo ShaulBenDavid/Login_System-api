@@ -1,3 +1,4 @@
+
 const SERVER_URL = "https://abra-course-server.herokuapp.com/";
 
 const apiCall = async (url, payload, method = "GET") => {
@@ -15,6 +16,7 @@ const apiCall = async (url, payload, method = "GET") => {
     return { data, response };
 }
 
+// Login 
 export const loginUser = async (username, password) => {
     const payload = {
         username,
@@ -28,6 +30,7 @@ export const loginUser = async (username, password) => {
 }
 
 
+// Register
 export const registerUser = async (username, password, email, firstName, lastName) => {
 
     const payload = {
@@ -43,4 +46,21 @@ export const registerUser = async (username, password, email, firstName, lastNam
 
     return data;
     
+}
+
+console.log(1)
+
+export const getPosts = async (accessToken) => {
+    const response = await fetch("https://abra-course-server.herokuapp.com/items/", {
+        headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + accessToken
+        },
+        method: "GET"
+    })
+    
+    if (response.status === 200){
+        const data = await response.json();
+        return data;
+    }
 }

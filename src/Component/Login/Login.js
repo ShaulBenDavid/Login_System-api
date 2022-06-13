@@ -17,14 +17,14 @@ const Login = ({ addAccessToken }) => {
         event.preventDefault();
 
         try {
-            const accessKey = await loginUser(username, password); 
-            console.log(accessKey);
+            const userProfile = await loginUser(username, password); 
+            console.log(userProfile);
 
-            if (accessKey.data.access !== undefined) {
+            if (userProfile.data.access !== undefined) {
 
-                addAccessToken([accessKey.data.access, username]); 
+                addAccessToken([userProfile.data.access, username]); 
                 
-            } else if (accessKey.response.status === 401) {
+            } else if (userProfile.response.status === 401) {
                 
                 alert('Incorrect Password or User');
                 

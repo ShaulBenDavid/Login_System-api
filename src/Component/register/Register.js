@@ -26,7 +26,6 @@ const Register = ({ signType, setSignType}) => {
 
         try {
             const data = await registerUser(username, password, email, firstName, lastName);
-            console.log(data.response.status);
 
             if (data.response.status === 400) {
                 alert("Your register was failed try diffrent Email or User Name");
