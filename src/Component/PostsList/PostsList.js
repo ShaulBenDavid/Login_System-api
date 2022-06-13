@@ -4,10 +4,9 @@ import { PostPage, PostsContainer } from "./PostList.style";
 
 const PostsList = ({ accessToken, logoutFromUser, myItems, setMyItems }) => {
 
-    console.log(myItems)
       //Loading the new post in a real time
     const addPost = (event) => {
-        setMyItems([...myItems, event]);
+        setMyItems([event, ...myItems]);
     }
 
     // Delete item

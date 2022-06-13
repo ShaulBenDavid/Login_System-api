@@ -4,7 +4,7 @@ import GlobalStyled from './GlobalDesgin/Global';
 import Login from './Component/Login/Login';
 import Register from './Component/register/Register';
 import PostsList from './Component/PostsList/PostsList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as S from './App.style';
 import Header from './Component/Header/Header';
 import Banner from './Component/Banner/Banner';
@@ -12,20 +12,33 @@ import { getPosts } from './Services/Api';
 
 function App() {
   const [accessToken, setAccessToken] = useState(() => localStorage.getItem("AccessToken"));
-  const [showName, setShowName] = useState(() => '');
+  const [showName, setShowName] = useState(() => localStorage.getItem("UserName"));
   const [signType, setSignType] = useState(true);
   const [userIsActive, setUserIsActive] = useState(false);
   const [myItems, setMyItems] = useState(() => []);
 
+  // Get Items And stay login
+  useEffect(() => {
+    const fetchData = async () => {
+      // Get Items
+      const data = await getPosts(accessToken);
+      console.log(data);
+      if (data) {
+        setMyItems(data);
+        setUserIsActive(true);
+      }
+    }
+ 
+    fetchData();
+  }, [accessToken]);
+  
   //Deploy access token and login
-  const addAccessToken = async (event) => {
+  const addUserProfile = async (event) => {
     setAccessToken(event[0]);
     localStorage.setItem("AccessToken", event[0]);
 
     if (event[0]) {
       setUserIsActive(true);
-      const data = await getPosts(accessToken);
-      setMyItems(data);
     }
     setShowName(event[1]);
     localStorage.setItem("UserName", event[1])
@@ -57,7 +70,7 @@ function App() {
           <S.AuthBox>
             <S.FormSide>  
               {signType ?
-                <Login addAccessToken={addAccessToken} />
+                <Login addUserProfile={addUserProfile} />
                 :
                 <Register setSignType={setSignType} signType={signType} />
               }

@@ -9,7 +9,7 @@ const DEFAULT_FORM = {
     password: ''
 }
 
-const Login = ({ addAccessToken }) => {
+const Login = ({ addUserProfile }) => {
     const [formField, setFormField] = useState(DEFAULT_FORM);
     const { username, password} = formField;
 
@@ -17,12 +17,13 @@ const Login = ({ addAccessToken }) => {
         event.preventDefault();
 
         try {
+            // Get access token and status
             const userProfile = await loginUser(username, password); 
             console.log(userProfile);
 
             if (userProfile.data.access !== undefined) {
 
-                addAccessToken([userProfile.data.access, username]); 
+                addUserProfile([userProfile.data.access, username]); 
                 
             } else if (userProfile.response.status === 401) {
                 
