@@ -8,20 +8,24 @@ import { useState } from 'react';
 import * as S from './App.style';
 import Header from './Component/Header/Header';
 import Banner from './Component/Banner/Banner';
+import { getPosts } from './Services/Api';
 
 function App() {
   const [accessToken, setAccessToken] = useState(() => localStorage.getItem("AccessToken"));
   const [showName, setShowName] = useState(() => '');
   const [signType, setSignType] = useState(true);
   const [userIsActive, setUserIsActive] = useState(false);
+  const [myItems, setMyItems] = useState(() => []);
 
   //Deploy access token and login
-  const addAccessToken = (event) => {
+  const addAccessToken = async (event) => {
     setAccessToken(event[0]);
     localStorage.setItem("AccessToken", event[0]);
 
     if (event[0]) {
       setUserIsActive(true);
+      const data = await getPosts(accessToken);
+      setMyItems(data);
     }
     setShowName(event[1]);
     localStorage.setItem("UserName", event[1])
@@ -70,7 +74,7 @@ function App() {
         
           <S.HomePage>
             <Header showName={showName} logoutFromUser={logoutFromUser}/>
-            <PostsList accessToken={accessToken} logoutFromUser={logoutFromUser}/>
+            <PostsList accessToken={accessToken} logoutFromUser={logoutFromUser} myItems={myItems} setMyItems={setMyItems}/>
           </S.HomePage>        
         }
 
