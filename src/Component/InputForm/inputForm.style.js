@@ -21,11 +21,19 @@ export const LabelInput = styled.label`
     transition: .3s ease all;
     color: ${({ theme }) => theme.colors.PrimaryBlue};
 
+
     ${props => props.shrink && css`
         top: -18px;
         font-size: 1rem;
         color: ${({ theme }) => theme.colors.SecondaryBlue};
     `}
+`;
+
+export const ErrMessage = styled.span`
+    position: absolute;
+    top: 30px;
+    right: 50%;
+    display: none;
 `;
 
 export const InputBox = styled.input`
@@ -46,5 +54,19 @@ export const InputBox = styled.input`
         color: ${({ theme }) => theme.colors.SecondaryBlue};
     }
 
+    &:invalid {
+
+    ${props => props.focused && css`
+        border-color: #bb1133;
+
+        & ~ ${ErrMessage} {
+            display: block;
+        }
+    `}
+
+    }
+
 `;
+
+
 

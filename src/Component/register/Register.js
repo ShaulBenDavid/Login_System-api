@@ -48,7 +48,7 @@ const Register = ({ signType, setSignType}) => {
     return (
         <Fragment>
             <form onSubmit={handleSubmit}>
-                <InputForm type="text" name="username" required onChange={handleChange} value={username} label="User Name"/>
+                <InputForm type="text" name="username" required pattern="[A-Za-z0-9]{3,16}$" onChange={handleChange} value={username} label="User Name" />
                 <InputForm type="password" name="password" required onChange={handleChange} value={password} label="Password"/>
                 <InputForm type="password" name="password2" required onChange={handleChange} value={password2} label="Confirm Password"/>
                 <InputForm type="email" name="email" required  onChange={handleChange} value={email} label="Email"/>
