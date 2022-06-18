@@ -32,8 +32,10 @@ export const LabelInput = styled.label`
 export const ErrMessage = styled.span`
     position: absolute;
     top: 30px;
-    right: 50%;
+    color: #bb1133;
     display: none;
+    font-size: .8rem;
+    width: 100%;
 `;
 
 export const InputBox = styled.input`

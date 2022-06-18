@@ -2,6 +2,8 @@ import React, { useState, Fragment } from 'react';
 import InputForm from '../InputForm/InputForm';
 import Button from '../Button/Button';
 import { registerUser } from '../../Services/Api';
+import { RegisterInput } from './RegisterInput';
+
 
 const DEFAULT_FORM = {
     username: '',
@@ -48,12 +50,21 @@ const Register = ({ signType, setSignType}) => {
     return (
         <Fragment>
             <form onSubmit={handleSubmit}>
-                <InputForm type="text" name="username" required pattern="[A-Za-z0-9]{3,16}$" onChange={handleChange} value={username} label="User Name" />
-                <InputForm type="password" name="password" required onChange={handleChange} value={password} label="Password"/>
-                <InputForm type="password" name="password2" required onChange={handleChange} value={password2} label="Confirm Password"/>
-                <InputForm type="email" name="email" required  onChange={handleChange} value={email} label="Email"/>
-                <InputForm type="text" name="firstName" required  onChange={handleChange} value={firstName} label="First Name"/>
-                <InputForm type="text" name="lastName" required onChange={handleChange} value={lastName} label="Last Name"/>
+                {RegisterInput.map((input) => {
+                    return (
+                        <InputForm
+                            type={input.type}
+                            name={input.name}
+                            required={input.required}
+                            pattern={input.pattern}
+                            onChange={handleChange}
+                            value={formField[input.name]}
+                            label={input.label}
+                            key={input.id}
+                            errMessage={input.errMessage}
+                        />
+                    )
+                })}
                 <Button type='submit'>Register</Button>
             </form>
         </Fragment>
