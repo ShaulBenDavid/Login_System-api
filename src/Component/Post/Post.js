@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { deleteUserItem, renameUserItem } from "../../Services/Api";
 import InputForm from "../InputForm/InputForm";
 import { StyledPost, PostButton, ButtonWrapper } from './Post.style';
 
@@ -11,13 +12,7 @@ const Post = ({ item, accessToken, deleteItemFromList, updateItem, logoutFromUse
     // Delete api
     const deleteItem = async (id) => {
         try {
-            const response = await fetch(`https://abra-course-server.herokuapp.com/items/${id}/`, {
-                headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + accessToken
-                },
-                method: "DELETE"
-            })
+            const response = await deleteUserItem(accessToken, id);
 
             if (response.status === 204) {
                 deleteItemFromList(id);          
@@ -34,22 +29,12 @@ const Post = ({ item, accessToken, deleteItemFromList, updateItem, logoutFromUse
     // Rename api
     const RenameItem = async (id, name) => {
         try {
-            const payload = {
-                name
-            };
+            const data = await renameUserItem(accessToken, id, name);
+            console.log(data)
 
-            const response = await fetch(`https://abra-course-server.herokuapp.com/items/${id}/`, {
-                headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + accessToken
-                },
-                method: "PATCH",
-                body: JSON.stringify(payload)
-            })
-
-            if (response.status === 200) {
+            if (data.response.status === 200) {
                 updateItem(id, name);          
-            } else if (response.status === 401) {
+            } else if (data.response.status === 401) {
                 logoutFromUser();
             }
         } catch (e) {

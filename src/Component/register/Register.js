@@ -56,7 +56,7 @@ const Register = ({ signType, setSignType}) => {
                             type={input.type}
                             name={input.name}
                             required={input.required}
-                            pattern={input.pattern}
+                            pattern={input.name === "password2" ? password : input.pattern}
                             onChange={handleChange}
                             value={formField[input.name]}
                             label={input.label}

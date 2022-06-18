@@ -42,7 +42,7 @@ export const RegisterInput = [
         type: "text",
         name: "firstName",
         label: "First Name",
-        pattern: null,
+        pattern: "[A-Za-z0-9]{2,16}$",
         errMessage: "First Name is required!",
         required: true,
     },
@@ -51,16 +51,8 @@ export const RegisterInput = [
         type: "text",
         name: "lastName",
         label: "Last Name",
-        pattern: null,
+        pattern: "[A-Za-z0-9]{2,16}$",
         errMessage: "Last Name is required!",
         required: true,
     },
 ];
-
-// <InputForm type="text" name="username" required pattern="[A-Za-z0-9]{3,16}$" onChange={handleChange} value={username} label="User Name" />
-// <InputForm type="password" name="password" required onChange={handleChange} value={password} label="Password"/>
-// <InputForm type="password" name="password2" required onChange={handleChange} value={password2} label="Confirm Password"/>
-// <InputForm type="email" name="email" required  onChange={handleChange} value={email} label="Email"/>
-// <InputForm type="text" name="firstName" required  onChange={handleChange} value={firstName} label="First Name"/>
-// <InputForm type="text" name="lastName" required onChange={handleChange} value={lastName} label="Last Name"/>
-// <Button type='submit'>Register</Button>

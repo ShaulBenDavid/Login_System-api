@@ -2,37 +2,29 @@ import { Fragment, useState } from 'react';
 import InputForm from '../InputForm/InputForm';
 import Button from '../Button/Button';
 import { CreateInput } from './CreatePost.style';
+import { addUserPost } from '../../Services/Api';
 
 const CreatePost = ({ accessToken, addPost, logoutFromUser }) => {
     const [post, setPost] = useState('');
 
 
     const createPost = async (name) => {
-        const payload = {
-            name
-        };
+        const data = await addUserPost(name, accessToken);
 
-        const response = await fetch("https://abra-course-server.herokuapp.com/items/", {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + accessToken
-            },
-            method: "POST",
-            body: JSON.stringify(payload)
-        })
-
-        if (response.status === 401) {
+        if (data.response.status === 401) {
             logoutFromUser();
         }
 
-        const data = await response.json();
-        addPost(data);
+        // const data = await response.json();
+        addPost(data.data);
         setPost('');
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        createPost(post);
+        if (post.length > 0) {
+            createPost(post);           
+        }
     }
 
     const handleChange = (event) => {
@@ -42,7 +34,7 @@ const CreatePost = ({ accessToken, addPost, logoutFromUser }) => {
     return (
         <Fragment>
             <CreateInput onSubmit={handleSubmit}>
-                <InputForm type="text" name="post" required onChange={handleChange} value={post} label="Write Something" />
+                <InputForm type="text" name="post" onChange={handleChange} value={post} label="Write Something" />
                 <Button type='submit'>Post</Button>
             </CreateInput>
         </Fragment>

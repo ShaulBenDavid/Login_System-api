@@ -1,35 +1,33 @@
 
 const SERVER_URL = "https://abra-course-server.herokuapp.com/";
 // Post Call
-const apiCall = async (url, payload, method = "GET") => {
-    
-    const response = await fetch(url, {
-        headers: {
-            "Content-Type": "application/json",
-        },
-        method: method,
-        body: JSON.stringify(payload)
-    });
-
-    const data = await response.json();
-
-    return { data, response };
-}
-
-// Get Call
-const apiCallGet = async (url, accessToken, method = "GET") => {
+const apiCall = async (
+    url,
+    payload = undefined,
+    method = "GET",
+    accessToken = undefined
+) => {
     
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + accessToken
         },
-        method: method
+        method: method,
+        body: JSON.stringify(payload)
     });
 
-    const data = await response.json();
+    let data = undefined;
 
-    return { data, response };
+    if (method !== "DELETE") {
+        data = await response.json();
+        return { data, response };
+    }
+
+    if (method === "DELETE") {
+        return response;
+    }
+
 }
 
 // Login 
@@ -64,14 +62,53 @@ export const registerUser = async (username, password, email, firstName, lastNam
     
 }
 
+// Register
+export const addUserPost = async (name, accessToken) => {
+
+    const payload = {
+        name
+    };
+
+    const data = await apiCall(SERVER_URL + "items/", payload, "POST", accessToken);
+
+    return data;
+    
+}
+
 // Get Items
 export const getPosts = async (accessToken) => {
 
-    const data = await apiCallGet(SERVER_URL + "items/", accessToken);
+    const data = await apiCall(SERVER_URL + "items/", undefined, "GET",accessToken);
     console.log(data);
 
     if (data.response.status === 200) {
         return data.data;
     }
+
+}
+
+// Delete Items
+export const deleteUserItem = async (accessToken, id) => {
+
+    const data = await apiCall(SERVER_URL + "items/" + id + "/", undefined, "DELETE",accessToken);
+
+    return data;
+    
+
+}
+
+// Rename Items
+export const renameUserItem = async (accessToken, id, name) => {
+
+    const payload = {
+        name
+    };
+
+    const data = await apiCall(SERVER_URL + "items/" + id + "/", payload, "PATCH", accessToken);
+    
+    console.log(data);
+
+    return data;
+    
 
 }

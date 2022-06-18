@@ -4,10 +4,11 @@ import * as S from './inputForm.style';
 const InputForm = ({ label, errMessage, ...otherProps }) => {
     const [focused, setFocused] = useState(false);
 
-    const handleBlur = () => {
+    const handleBlur = (e) => {
         setFocused(true);
     }
-    
+
+
     return (
         <>
             <S.InputContainer>
