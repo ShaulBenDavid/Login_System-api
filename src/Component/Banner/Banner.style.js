@@ -22,16 +22,16 @@ export const StyledBanner = styled.div`
         left: 0;
         transition: 1s all;
 
+
         ${props => props.active && css`
-            transform: translateX(100%);
+            opacity: 0;
+            width: 0;
         `}     
 
         button {
             display: block;
         }
-
-
-
         
     }
 `;
+
